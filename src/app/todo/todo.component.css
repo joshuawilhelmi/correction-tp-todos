@@ -1,0 +1,28 @@
+.todo {
+    background: #fdeece;
+    width:600px;
+    margin:10px auto;
+    display:block;
+    padding:20px;
+}
+
+.todo.done {
+    background: #f0ebe1;
+}
+.todo.done .libelle {
+    text-decoration: line-through;
+}
+
+.delete {
+    cursor:pointer;
+    padding:5px;
+    width:30px;
+    text-align:center;
+    margin-top: -5px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50px;
+}
+
+.libelle {
+    padding-left:10px;
+}

@@ -1,0 +1,28 @@
+<app-todo
+  *ngFor="let todo of todos"
+  (update)="saveTodos()"
+  (delete)="deleteTodo(todo)"
+  [todo]="todo"
+></app-todo>
+
+<div class="form_add_todo">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      [(ngModel)]="newTodo"
+      class="form-control"
+      placeholder="Nouvelle tâche"
+      aria-label="Nouvelle tâche"
+      aria-describedby="basic-addon2"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="addTodo()"
+        type="button"
+      >
+        Ajouter
+      </button>
+    </div>
+  </div>
+</div>

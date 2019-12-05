@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Todo } from "../todo";
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: "app-todo-list",
@@ -11,15 +12,16 @@ export class TodoListComponent implements OnInit {
 
   newTodo: string;
 
-  constructor() { }
+  constructor(private todoService: TodoService) { }
 
   ngOnInit() {
     this.refreshTodos();
   }
 
   private refreshTodos() {
-    const todos = localStorage.getItem('todos')
-    this.todos = todos ? JSON.parse(todos) : []
+    this.todoService.findTodos().subscribe(
+      (todos: Todo[]) => this.todos = todos
+    )
   }
 
   saveTodos() {
@@ -27,16 +29,24 @@ export class TodoListComponent implements OnInit {
   }
 
   addTodo() {
-    this.todos.push({
-      id: this.todos.reduce((acc, t) => acc <= t.id ? t.id + 1 : acc, 1),
+    const newTodo: Todo = {
       task: this.newTodo,
       isDone: false
+    }
+    this.todoService.addTodo(newTodo).subscribe((todo: Todo) => {
+      this.todos.push(todo)
     })
-    this.saveTodos()
   }
 
   deleteTodo(todo: Todo) {
-    this.todos = this.todos.filter(t => t.id !== todo.id)
-    this.saveTodos()
+    this.todoService.deleteTodo(todo).subscribe(
+      () => {
+        this.todos = this.todos.filter(t => t.id !== todo.id)
+      }
+    )
+  }
+
+  updateTodo(todo: Todo) {
+    this.todoService.updateTodo(todo).subscribe()
   }
 }
